@@ -44,19 +44,17 @@
 # define OPENCOW_DLL    "opencow.dll"
 #endif
 
-extern "C" void UnicowsReportFatalError(const char *msg);
-
 extern "C" HMODULE __stdcall 
-MyLoadUnicowsProc(void)
+LoadOpencowLibrary(void)
 {
     HMODULE hModule = ::LoadLibraryA(".\\" OPENCOW_DLL);
     if (hModule)
-        ::MessageBoxA(NULL, "Loaded .\\" OPENCOW_DLL, "opencow", MB_OK);
+        ::MessageBoxA(NULL, "Loaded .\\" OPENCOW_DLL, "simple", MB_OK);
     else
-        UnicowsReportFatalError("Failed to load .\\" OPENCOW_DLL);
+        ::MessageBoxA(NULL, "Failed to load .\\" OPENCOW_DLL, "simple", MB_OK);
     return hModule;
 }
-extern "C" HMODULE (__stdcall *_PfnLoadUnicows)(void) = &MyLoadUnicowsProc;
+extern "C" HMODULE (__stdcall *_PfnLoadUnicows)(void) = &LoadOpencowLibrary;
 
 int _tmain(int argc, _TCHAR* argv[])
 {

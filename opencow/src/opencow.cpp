@@ -71,7 +71,11 @@ DllMain(
         if (!InitializeSystemVersion())
             return FALSE;
 
-        ::MessageBoxA(NULL, "opencow.dll has been loaded.", "opencow", MB_OK);
+#ifdef _DEBUG
+        ::MessageBoxA(NULL, "Opencow Debug DLL has been loaded.", "opencow", MB_OK);
+#else
+        ::MessageBoxA(NULL, "Opencow Release DLL has been loaded.", "opencow", MB_OK);
+#endif
         return TRUE;
     }
 
