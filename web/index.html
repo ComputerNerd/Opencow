@@ -1,0 +1,120 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html lang="en">
+<head>
+  <meta content="text/html; charset=utf-8" http-equiv="content-type">
+  <title>Opencow</title>
+</head>
+<body style="max-width: 600px">
+<p><a href="http://opencow.sourceforge.net/"><img alt="opencow logo"
+ src="opencow-sml.png"
+ style="border: 0px solid ; width: 137px; height: 120px;"></a></p>
+
+<h1>Opencow: Open Layer for Unicode</h1>
+
+<h2>Introduction</h2>
+<p>Opencow is an open-source friendly replacement library for the Microsoft Layer
+for Unicode. This library allows a Unicode Windows application to run on all
+versions of Windows including 95, 98 and ME.</p>
+
+
+<h2>Licence</h2>
+<p>Opencow is tri-licenced with MPL 1.1/GPL 2.0/LGPL 2.1 in the same manner as the
+Mozilla project is. See the file
+<a href="http://cvs.sourceforge.net/viewcvs.py/opencow/opencow/LICENCE.txt?rev=HEAD">LICENCE.txt</a>
+for the text of the licence. The
+short version of this means that Opencow may be used in both open-source and
+closed-source commercial projects.</p>
+
+
+<h2>Implementation</h2>
+<p>Opencow is does not currently support the complete API that MSLU supports. See
+the MSDN documentation for details of which API calls are supported by MSLU.
+See the file src/opencow.def for the list of which API calls are currently
+supported by Opencow. The intention is to eventually support the same API set
+that MSLU supports such that opencow.dll is a complete MSLU replacement.</p>
+
+
+<h2>Usage</h2>
+
+<ol>
+<li>Modify your application to build in Unicode mode
+
+<li>Download the binary release of opencow.dll
+
+<li>Download the latest release of libunicows, see links (a).
+
+<li>Build your project, ensuring that the first library on the link line is
+   libunicows. See the documentation of libunicows for details.
+
+<li>Distribute your application with opencow.dll in the same directory as the
+   application.
+</ol>
+
+<h2>Building</h2>
+
+<ol>
+<li>If compiling with Visual Studio 6 you will need to install the Microsoft
+   Platform SDK. See links (c). Visual Studio .NET doesn't require the
+   Platform SDK to compile the project.
+
+<li>Open opencow.dsw and build all projects.
+</ol>
+
+<p><b>Notes:</b>
+
+<ol>
+<li>There is a feature(?) in VS.NET 2003 which prevents libunicows from
+   overriding the unicode API when linking with debug information. You
+   must build using VC6, or use the release version of the application
+   in order to test libunicow/opencow.
+</ol>
+
+
+<h2>Technical Description</h2>
+
+<p>The Microsoft Layer for Unicode (MSLU or Unicows) is a DLL (unicows.dll) and
+import library (unicows.lib) distributed by Microsoft which allows a single
+32-bit unicode application to run on versions of Microsoft Windows which do
+not natively support unicode applications (95, 98 and ME). The Microsft
+library is unsurprisingly distributed under a licence which is not compatible
+with open source software (b).
+
+<p>The support for Unicode on Windows 95/98/ME is provided by implementing the
+Unicode Win32 API in the DLL. This DLL is not used by Windows platforms
+which natively support unicode, but only by Windows 95/98/ME. Internally
+the unicode Win32 API translates strings between the unicode encoding used
+for input and output parameters and the multi-byte codepage strings supported
+by the OS, calling the ANSI Win32 API with the translated strings.
+
+<p>This project, the Open Layer for Unicode (opencow) is designed to be a
+drop-in replacement for the MSLU, providing the exact same functionality with
+an open source compatible licence. The final deliverable of this project is a
+single compiled DLL (opencow.dll) which implements the same external interface
+as the Microsoft DLL. This DLL is used by software projects along with
+libunicows (A).
+
+<p>This project came about due to the Mozilla project's need to have an
+open-source compatible library for MSLU and is expected to be used to provide
+Win32 unicode functionality for Mozilla (b).
+
+
+<h2>Links</h2>
+
+<p>(a) <a href="http://libunicows.sourceforge.net/">libunicows</a>
+
+<p>(b) <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=239279">Mozilla bug 239279</a>, Need Mozilla binary that supports Windows unicode API
+
+<p>(c) <a href="http://www.microsoft.com/msdownload/platformsdk/sdkupdate/">Microsoft Platform SDK</a>
+
+
+<h2>Contact</h2>
+
+<p>You may contact the author, Brodie Thiesfield, at brofield &lt;at&gt; jellycan &lt;dot&gt; com</p>
+
+
+<div style="text-align: right;">
+<a href="http://sourceforge.net"><img
+ src="http://sourceforge.net/sflogo.php?group_id=125570&amp;type=5"
+ alt="SourceForge.net Logo" border="0" height="62" width="210"></a></div>
+</body>
+</html>
