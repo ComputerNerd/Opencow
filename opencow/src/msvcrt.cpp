@@ -58,13 +58,13 @@ _wrename(
     const wchar_t * newname
     )
 {
-    CMbcsBuffer<MAX_PATH+1> mbcsOldname;
+    CMbcsBuffer mbcsOldname;
     if (!mbcsOldname.FromUnicode(oldname)) {
         errno = ENOENT;
         return -1;
     }
 
-    CMbcsBuffer<MAX_PATH+1> mbcsNewname;
+    CMbcsBuffer mbcsNewname;
     if (!mbcsNewname.FromUnicode(newname)) {
         errno = ENOENT;
         return -1;
@@ -78,7 +78,7 @@ _wremove(
     const wchar_t * path
     )
 {
-    CMbcsBuffer<MAX_PATH+1> mbcsPath;
+    CMbcsBuffer mbcsPath;
     if (!mbcsPath.FromUnicode(path)) {
         errno = ENOENT;
         return -1;
@@ -101,7 +101,7 @@ _wopen(
     pmode = va_arg(marker, int);
     va_end(marker);
 
-    CMbcsBuffer<MAX_PATH+1> mbcsFilename;
+    CMbcsBuffer mbcsFilename;
     if (!mbcsFilename.FromUnicode(filename)) {
         errno = ENOENT;
         return -1;
@@ -116,7 +116,7 @@ _waccess(
     int mode
     )
 {
-    CMbcsBuffer<MAX_PATH+1> mbcsPath;
+    CMbcsBuffer mbcsPath;
     if (!mbcsPath.FromUnicode(path)) {
         errno = ENOENT;
         return -1;
@@ -130,7 +130,7 @@ _wchdir(
     const wchar_t * dirname
     )
 {
-    CMbcsBuffer<MAX_PATH+1> mbcsDirname;
+    CMbcsBuffer mbcsDirname;
     if (!mbcsDirname.FromUnicode(dirname)) {
         errno = ENOENT;
         return -1;
@@ -145,7 +145,7 @@ _wgetcwd(
     int maxlen
     )
 {
-    CMbcsBuffer<MAX_PATH+1> mbcsBuffer;
+    CMbcsBuffer mbcsBuffer;
     if (!::_getcwd(mbcsBuffer, mbcsBuffer.BufferSize()))
         return NULL;
 
@@ -236,7 +236,7 @@ _wmkdir(
     const wchar_t * dirname
     )
 {
-    CMbcsBuffer<MAX_PATH+1> mbcsDirname;
+    CMbcsBuffer mbcsDirname;
     if (!mbcsDirname.FromUnicode(dirname)) {
         errno = ENOENT;
         return -1;
@@ -250,7 +250,7 @@ _wrmdir(
     const wchar_t * dirname
     )
 {
-    CMbcsBuffer<MAX_PATH+1> mbcsDirname;
+    CMbcsBuffer mbcsDirname;
     if (!mbcsDirname.FromUnicode(dirname)) {
         errno = ENOENT;
         return -1;
@@ -265,7 +265,7 @@ _wstat(
     struct _stat * buffer
     )
 {
-    CMbcsBuffer<MAX_PATH+1> mbcsPath;
+    CMbcsBuffer mbcsPath;
     if (!mbcsPath.FromUnicode(path)) {
         errno = ENOENT;
         return -1;
@@ -280,7 +280,7 @@ _wstati64(
     struct _stati64 * buffer
     )
 {
-    CMbcsBuffer<MAX_PATH+1> mbcsPath;
+    CMbcsBuffer mbcsPath;
     if (!mbcsPath.FromUnicode(path)) {
         errno = ENOENT;
         return -1;

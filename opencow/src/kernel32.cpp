@@ -56,6 +56,7 @@
 // Globals
 
 extern HINSTANCE g_hInstanceDLL;
+extern int       g_nDebug;
 
 // ----------------------------------------------------------------------------
 // API
@@ -65,7 +66,7 @@ AddAtomW(
     IN LPCWSTR lpString
     )
 {
-    CMbcsBuffer<256> mbcsString;
+    CMbcsBuffer mbcsString;
     if (!mbcsString.FromUnicode(lpString))
         return 0;
 
@@ -88,11 +89,11 @@ CopyFileW(
     IN BOOL bFailIfExists
     )
 {
-    CMbcsBuffer<MAX_PATH+1> mbcsExistingFileName;
+    CMbcsBuffer mbcsExistingFileName;
     if (!mbcsExistingFileName.FromUnicode(lpExistingFileName))
         return FALSE;
 
-    CMbcsBuffer<MAX_PATH+1> mbcsNewFileName;
+    CMbcsBuffer mbcsNewFileName;
     if (!mbcsNewFileName.FromUnicode(lpNewFileName))
         return FALSE;
 
@@ -106,11 +107,11 @@ CreateDirectoryExW(
     IN LPSECURITY_ATTRIBUTES lpSecurityAttributes
     )
 {
-    CMbcsBuffer<MAX_PATH+1> mbcsTemplateDirectory;
+    CMbcsBuffer mbcsTemplateDirectory;
     if (!mbcsTemplateDirectory.FromUnicode(lpTemplateDirectory))
         return FALSE;
 
-    CMbcsBuffer<MAX_PATH+1> mbcsNewDirectory;
+    CMbcsBuffer mbcsNewDirectory;
     if (!mbcsNewDirectory.FromUnicode(lpNewDirectory))
         return FALSE;
 
@@ -123,7 +124,7 @@ CreateDirectoryW(
     IN LPSECURITY_ATTRIBUTES lpSecurityAttributes
     )
 {
-    CMbcsBuffer<MAX_PATH+1> mbcsPathName;
+    CMbcsBuffer mbcsPathName;
     if (!mbcsPathName.FromUnicode(lpPathName))
         return FALSE;
 
@@ -138,7 +139,7 @@ CreateEventW(
     IN LPCWSTR lpName
     )
 {
-    CMbcsBuffer<MAX_PATH+1> mbcsName;
+    CMbcsBuffer mbcsName;
     if (!mbcsName.FromUnicode(lpName))
         return NULL;
 
@@ -155,7 +156,7 @@ CreateFileMappingW(
     IN LPCWSTR lpName
     )
 {
-    CMbcsBuffer<MAX_PATH+1> mbcsName;
+    CMbcsBuffer mbcsName;
     if (!mbcsName.FromUnicode(lpName))
         return NULL;
 
@@ -174,7 +175,7 @@ CreateFileW(
     IN HANDLE hTemplateFile
     )
 {
-    CMbcsBuffer<MAX_PATH+1> mbcsFileName;
+    CMbcsBuffer mbcsFileName;
     if (!mbcsFileName.FromUnicode(lpFileName))
         return INVALID_HANDLE_VALUE;
 
@@ -191,7 +192,7 @@ CreateMailslotW(
     IN LPSECURITY_ATTRIBUTES lpSecurityAttributes
     )
 {
-    CMbcsBuffer<MAX_PATH+1> mbcsName;
+    CMbcsBuffer mbcsName;
     if (!mbcsName.FromUnicode(lpName))
         return INVALID_HANDLE_VALUE;
 
@@ -205,7 +206,7 @@ CreateMutexW(
     IN LPCWSTR lpName
     )
 {
-    CMbcsBuffer<MAX_PATH+1> mbcsName;
+    CMbcsBuffer mbcsName;
     if (!mbcsName.FromUnicode(lpName))
         return NULL;
 
@@ -228,15 +229,15 @@ CreateProcessW(
     OUT LPPROCESS_INFORMATION lpProcessInformation
     )
 {
-    CMbcsBuffer<MAX_PATH+1> mbcsApplicationName;
+    CMbcsBuffer mbcsApplicationName;
     if (!mbcsApplicationName.FromUnicode(lpApplicationName))
         return FALSE;
 
-    CMbcsBuffer<MAX_PATH+1> mbcsCommandLine;
+    CMbcsBuffer mbcsCommandLine;
     if (!mbcsCommandLine.FromUnicode(lpCommandLine))
         return FALSE;
 
-    CMbcsBuffer<MAX_PATH+1> mbcsCurrentDirectory;
+    CMbcsBuffer mbcsCurrentDirectory;
     if (!mbcsCurrentDirectory.FromUnicode(lpCurrentDirectory))
         return FALSE;
 
@@ -256,12 +257,12 @@ CreateProcessW(
     startupInfoA.hStdOutput      = lpStartupInfo->hStdOutput;
     startupInfoA.hStdError       = lpStartupInfo->hStdError;
 
-    CMbcsBuffer<64> mbcsDesktop;
+    CMbcsBuffer mbcsDesktop;
     if (!mbcsDesktop.FromUnicode(lpStartupInfo->lpDesktop))
         return FALSE;
     startupInfoA.lpDesktop = mbcsDesktop;
 
-    CMbcsBuffer<64> mbcsTitle;
+    CMbcsBuffer mbcsTitle;
     if (!mbcsTitle.FromUnicode(lpStartupInfo->lpTitle))
         return FALSE;
     startupInfoA.lpTitle = mbcsTitle;
@@ -280,7 +281,7 @@ CreateSemaphoreW(
     IN LPCWSTR lpName
     )
 {
-    CMbcsBuffer<MAX_PATH+1> mbcsName;
+    CMbcsBuffer mbcsName;
     if (!mbcsName.FromUnicode(lpName))
         return NULL;
 
@@ -308,7 +309,7 @@ CreateWaitableTimerW(
         return NULL;
     }
 
-    CMbcsBuffer<MAX_PATH+1> mbcsTimerName;
+    CMbcsBuffer mbcsTimerName;
     if (!mbcsTimerName.FromUnicode(lpTimerName))
         return NULL;
 
@@ -320,7 +321,7 @@ DeleteFileW(
     IN LPCWSTR lpFileName
     )
 {
-    CMbcsBuffer<MAX_PATH+1> mbcsFileName;
+    CMbcsBuffer mbcsFileName;
     if (!mbcsFileName.FromUnicode(lpFileName))
         return FALSE;
 
@@ -344,12 +345,12 @@ ExpandEnvironmentStringsW(
     IN DWORD nSize
     )
 {
-    CMbcsBuffer<256> mbcsSrc;
+    CMbcsBuffer mbcsSrc;
     if (!mbcsSrc.FromUnicode(lpSrc))
         return FALSE;
 
     DWORD dwResult = 0;
-    CMbcsBuffer<MAX_PATH+1> mbcsDst;
+    CMbcsBuffer mbcsDst;
     do {
         if (dwResult > (DWORD) mbcsDst.BufferSize()) {
             if (!mbcsDst.SetCapacity((int) dwResult))
@@ -378,7 +379,7 @@ FatalAppExitW(
     IN LPCWSTR lpMessageText
     )
 {
-    CMbcsBuffer<128> mbcsMessageText;
+    CMbcsBuffer mbcsMessageText;
     mbcsMessageText.FromUnicode(lpMessageText);
     ::FatalAppExit(uAction, mbcsMessageText);
 }
@@ -390,7 +391,7 @@ FindAtomW(
     IN LPCWSTR lpString
     )
 {
-    CMbcsBuffer<256> mbcsString;
+    CMbcsBuffer mbcsString;
     if (!mbcsString.FromUnicode(lpString))
         return 0;
 
@@ -404,7 +405,7 @@ FindFirstChangeNotificationW(
     IN DWORD dwNotifyFilter
     )
 {
-    CMbcsBuffer<MAX_PATH+1> mbcsPathName;
+    CMbcsBuffer mbcsPathName;
     if (!mbcsPathName.FromUnicode(lpPathName))
         return INVALID_HANDLE_VALUE;
 
@@ -430,7 +431,8 @@ CopyFindDataAtoW(
         lpFindDataW->cFileName, MAX_PATH);
 
     ::MultiByteToWideChar(CP_ACP, 0, lpFindDataA->cAlternateFileName, -1, 
-        lpFindDataW->cAlternateFileName, 14);
+        lpFindDataW->cAlternateFileName, 
+        ARRAY_SIZE(lpFindDataW->cAlternateFileName));
 }
 
 HANDLE WINAPI
@@ -439,7 +441,7 @@ FindFirstFileW(
     OUT LPWIN32_FIND_DATAW lpFindFileData
     )
 {
-    CMbcsBuffer<MAX_PATH+1> mbcsFileName;
+    CMbcsBuffer mbcsFileName;
     if (!mbcsFileName.FromUnicode(lpFileName))
         return INVALID_HANDLE_VALUE;
 
@@ -474,7 +476,7 @@ FindResourceExW(
     )
 {
     LPCSTR lpTypeA = (LPCSTR) lpType;
-    CMbcsBuffer<MAX_PATH+1> mbcsType;
+    CMbcsBuffer mbcsType;
     if (!IS_INTRESOURCE(lpType)) {
         if (!mbcsType.FromUnicode(lpType))
             return NULL;
@@ -482,7 +484,7 @@ FindResourceExW(
     }
 
     LPCSTR lpNameA = (LPCSTR) lpName;
-    CMbcsBuffer<MAX_PATH+1> mbcsName;
+    CMbcsBuffer mbcsName;
     if (!IS_INTRESOURCE(lpName)) {
         if (!mbcsName.FromUnicode(lpName))
             return NULL;
@@ -500,7 +502,7 @@ FindResourceW(
     )
 {
     LPCSTR lpTypeA = (LPCSTR) lpType;
-    CMbcsBuffer<MAX_PATH+1> mbcsType;
+    CMbcsBuffer mbcsType;
     if (!IS_INTRESOURCE(lpType)) {
         if (!mbcsType.FromUnicode(lpType))
             return NULL;
@@ -508,7 +510,7 @@ FindResourceW(
     }
 
     LPCSTR lpNameA = (LPCSTR) lpName;
-    CMbcsBuffer<MAX_PATH+1> mbcsName;
+    CMbcsBuffer mbcsName;
     if (!IS_INTRESOURCE(lpName)) {
         if (!mbcsName.FromUnicode(lpName))
             return NULL;
@@ -537,7 +539,7 @@ GetAtomNameW(
     IN int nSize
     )
 {
-    CMbcsBuffer<256> mbcsBuffer;
+    CMbcsBuffer mbcsBuffer;
     UINT uiLen = ::GetAtomNameA(nAtom, mbcsBuffer, mbcsBuffer.BufferSize());
     if (!uiLen)
         return 0;
@@ -592,7 +594,7 @@ GetComputerNameW(
     IN OUT LPDWORD lpnSize
     )
 {
-    CMbcsBuffer<MAX_COMPUTERNAME_LENGTH + 1> mbcsBuffer;
+    CMbcsBuffer mbcsBuffer;
     DWORD dwLen = mbcsBuffer.BufferSize();
     if (!::GetComputerNameA(mbcsBuffer, &dwLen))
         return FALSE;
@@ -619,7 +621,7 @@ GetCurrentDirectoryW(
     )
 {
     DWORD dwResult = 0;
-    CMbcsBuffer<MAX_PATH+1> mbcsBuffer;
+    CMbcsBuffer mbcsBuffer;
     do {
         if (dwResult > (DWORD) mbcsBuffer.BufferSize()) {
             if (!mbcsBuffer.SetCapacity((int) dwResult))
@@ -671,7 +673,7 @@ GetDiskFreeSpaceExW(
         }
     }
 
-    CMbcsBuffer<MAX_PATH+1> mbcsDirectoryName;
+    CMbcsBuffer mbcsDirectoryName;
     if (!mbcsDirectoryName.FromUnicode(lpDirectoryName))
         return FALSE;
 
@@ -688,7 +690,7 @@ GetDiskFreeSpaceW(
     OUT LPDWORD lpTotalNumberOfClusters
     )
 {
-    CMbcsBuffer<MAX_PATH+1> mbcsRootPathName;
+    CMbcsBuffer mbcsRootPathName;
     if (!mbcsRootPathName.FromUnicode(lpRootPathName))
         return FALSE;
 
@@ -701,7 +703,7 @@ GetDriveTypeW(
     IN LPCWSTR lpRootPathName
     )
 {
-    CMbcsBuffer<MAX_PATH+1> mbcsRootPathName;
+    CMbcsBuffer mbcsRootPathName;
     if (!mbcsRootPathName.FromUnicode(lpRootPathName))
         return DRIVE_UNKNOWN;
 
@@ -750,12 +752,12 @@ GetEnvironmentVariableW(
     IN DWORD nSize
     )
 {
-    CMbcsBuffer<128> mbcsName;
+    CMbcsBuffer mbcsName;
     if (!mbcsName.FromUnicode(lpName))
         return 0;
 
     DWORD dwResult = 0;
-    CMbcsBuffer<MAX_PATH+1> mbcsBuffer;
+    CMbcsBuffer mbcsBuffer;
     do {
         if (dwResult > (DWORD) mbcsBuffer.BufferSize()) {
             if (!mbcsBuffer.SetCapacity((int) dwResult))
@@ -785,7 +787,7 @@ GetFileAttributesW(
     IN LPCWSTR lpFileName
     )
 {
-    CMbcsBuffer<MAX_PATH+1> mbcsFileName;
+    CMbcsBuffer mbcsFileName;
     if (!mbcsFileName.FromUnicode(lpFileName))
         return INVALID_FILE_ATTRIBUTES;
 
@@ -800,12 +802,12 @@ GetFullPathNameW(
     OUT LPWSTR *lpFilePart
     )
 {
-    CMbcsBuffer<MAX_PATH+1> mbcsFileName;
+    CMbcsBuffer mbcsFileName;
     if (!mbcsFileName.FromUnicode(lpFileName))
         return 0;
 
     DWORD dwResult = 0;
-    CMbcsBuffer<MAX_PATH+1> mbcsBuffer;
+    CMbcsBuffer mbcsBuffer;
     do {
         if (dwResult > (DWORD) mbcsBuffer.BufferSize()) {
             if (!mbcsBuffer.SetCapacity((int) dwResult))
@@ -848,7 +850,7 @@ GetLogicalDriveStringsW(
     OUT LPWSTR lpBuffer
     )
 {
-    CMbcsBuffer<MAX_PATH+1> mbcsDriveStrings;
+    CMbcsBuffer mbcsDriveStrings;
     if (!mbcsDriveStrings.SetCapacity(nBufferLength))
         return 0;
 
@@ -878,12 +880,12 @@ GetLongPathNameW(
     IN DWORD    cchBuffer
     )
 {
-    CMbcsBuffer<MAX_PATH+1> mbcsShortPath;
+    CMbcsBuffer mbcsShortPath;
     if (!mbcsShortPath.FromUnicode(lpszShortPath))
         return 0;
 
     DWORD dwResult = 0;
-    CMbcsBuffer<MAX_PATH+1> mbcsLongPath;
+    CMbcsBuffer mbcsLongPath;
     do {
         if (dwResult > (DWORD) mbcsLongPath.BufferSize()) {
             if (!mbcsLongPath.SetCapacity((int) dwResult))
@@ -913,7 +915,7 @@ GetModuleFileNameW(
     IN DWORD nSize
     )
 {
-    CMbcsBuffer<MAX_PATH+1> mbcsFilename;
+    CMbcsBuffer mbcsFilename;
     if (!mbcsFilename.SetCapacity(nSize))
         return 0;
 
@@ -929,7 +931,7 @@ GetModuleHandleW(
     IN LPCWSTR lpModuleName
     )
 {
-    CMbcsBuffer<MAX_PATH+1> mbcsModuleName;
+    CMbcsBuffer mbcsModuleName;
     if (!mbcsModuleName.FromUnicode(lpModuleName))
         return NULL;
 
@@ -1506,7 +1508,8 @@ OCOW_GetProcAddress(
             return NULL;
     }
 
-    // where does the DLL exist?
+    // determine the path for the DLL that they have requested the 
+    // function for. 
     char szModulePath[MAX_PATH+1];
     if (!::GetModuleFileNameA(hModule, szModulePath, sizeof(szModulePath)))
         return NULL;
@@ -1517,7 +1520,8 @@ OCOW_GetProcAddress(
     }
     *pszModuleName++ = 0;
 
-    // we only check request if it is against a function we are supposed to export
+    // we only check to see if we load our own implementation of this function
+    // if the requested DLL is in the system path.
     if (0 == ::strcmp(szModulePath, szSystemPath))
     {
         MsluExport searchTerm = { pszModuleName, lpProcName };
@@ -1526,8 +1530,26 @@ OCOW_GetProcAddress(
             sizeof(rgCheckedExports)/sizeof(rgCheckedExports[0]),
             sizeof(rgCheckedExports[0]), 
             OCOW_Compare);
-        if (pEntry)
-            return ::GetProcAddress(g_hInstanceDLL, lpProcName);
+        if (pEntry) {
+            FARPROC pProc = ::GetProcAddress(g_hInstanceDLL, lpProcName);
+            if (g_nDebug >= 2) {
+                char szMessage[256];
+                if (pProc)
+                    lstrcpyA(szMessage, "Successfully loaded opencow function '");
+                else
+                    lstrcpyA(szMessage, "Failed to load opencow function '");
+                lstrcatA(szMessage, lpProcName);
+                lstrcatA(szMessage, "' from '");
+                lstrcatA(szMessage, pszModuleName);
+                lstrcatA(szMessage, "'. Press cancel to disable getprocaddress notifications.");
+
+                int nResult = ::MessageBoxA(NULL, szMessage, "opencow", 
+                    MB_OKCANCEL | MB_SETFOREGROUND);
+                if (nResult == IDCANCEL)
+                    g_nDebug = 1;
+            }
+            return pProc;
+        }
     }
 
     // if we haven't found the procedure we pass it on to the kernel
@@ -1545,12 +1567,12 @@ GetShortPathNameW(
     IN DWORD    cchBuffer
     )
 {
-    CMbcsBuffer<MAX_PATH+1> mbcsLongPath;
+    CMbcsBuffer mbcsLongPath;
     if (!mbcsLongPath.FromUnicode(lpszLongPath))
         return 0;
 
     DWORD dwResult = 0;
-    CMbcsBuffer<MAX_PATH+1> mbcsShortPath;
+    CMbcsBuffer mbcsShortPath;
     do {
         if (dwResult > (DWORD) mbcsShortPath.BufferSize()) {
             if (!mbcsShortPath.SetCapacity((int) dwResult))
@@ -1624,7 +1646,7 @@ GetStringTypeW(
     OUT LPWORD  lpCharType
     )
 {
-    CMbcsBuffer<MAX_PATH+1> mbcsString;
+    CMbcsBuffer mbcsString;
     if (!mbcsString.FromUnicode(lpSrcStr, cchSrc))
         return FALSE;
 
@@ -1639,7 +1661,7 @@ GetSystemDirectoryW(
     )
 {
     DWORD dwResult = 0;
-    CMbcsBuffer<MAX_PATH+1> mbcsBuffer;
+    CMbcsBuffer mbcsBuffer;
     do {
         if (dwResult > (DWORD) mbcsBuffer.BufferSize()) {
             if (!mbcsBuffer.SetCapacity((int) dwResult))
@@ -1669,7 +1691,7 @@ GetSystemWindowsDirectoryW(
     )
 {
     DWORD dwResult = 0;
-    CMbcsBuffer<MAX_PATH+1> mbcsBuffer;
+    CMbcsBuffer mbcsBuffer;
     do {
         if (dwResult > (DWORD) mbcsBuffer.BufferSize()) {
             if (!mbcsBuffer.SetCapacity((int) dwResult))
@@ -1703,11 +1725,11 @@ GetTempFileNameW(
     OUT LPWSTR lpTempFileName
     )
 {
-    CMbcsBuffer<MAX_PATH+1> mbcsPathName;
+    CMbcsBuffer mbcsPathName;
     if (!mbcsPathName.FromUnicode(lpPathName))
         return 0;
 
-    CMbcsBuffer<16> mbcsPrefixString;
+    CMbcsBuffer mbcsPrefixString;
     if (!mbcsPrefixString.FromUnicode(lpPrefixString))
         return 0;
 
@@ -1727,7 +1749,7 @@ GetTempPathW(
     )
 {
     DWORD dwResult = 0;
-    CMbcsBuffer<MAX_PATH+1> mbcsBuffer;
+    CMbcsBuffer mbcsBuffer;
     do {
         if (dwResult > (DWORD) mbcsBuffer.BufferSize()) {
             if (!mbcsBuffer.SetCapacity((int) dwResult))
@@ -1761,7 +1783,7 @@ GetWindowsDirectoryW(
     )
 {
     DWORD dwResult = 0;
-    CMbcsBuffer<MAX_PATH+1> mbcsBuffer;
+    CMbcsBuffer mbcsBuffer;
     do {
         if (dwResult > (DWORD) mbcsBuffer.BufferSize()) {
             if (!mbcsBuffer.SetCapacity((int) dwResult))
@@ -1789,7 +1811,7 @@ GlobalAddAtomW(
     IN LPCWSTR lpString
     )
 {
-    CMbcsBuffer<256> mbcsString;
+    CMbcsBuffer mbcsString;
     if (!mbcsString.FromUnicode(lpString))
         return 0;
 
@@ -1801,7 +1823,7 @@ GlobalFindAtomW(
     IN LPCWSTR lpString
     )
 {
-    CMbcsBuffer<256> mbcsString;
+    CMbcsBuffer mbcsString;
     if (!mbcsString.FromUnicode(lpString))
         return 0;
 
@@ -1816,7 +1838,7 @@ GlobalGetAtomNameW(
     IN int nSize
     )
 {
-    CMbcsBuffer<256> mbcsBuffer;
+    CMbcsBuffer mbcsBuffer;
     UINT uiLen = ::GlobalGetAtomNameA(nAtom, mbcsBuffer, mbcsBuffer.BufferSize());
     if (!uiLen)
         return 0;
@@ -1872,7 +1894,7 @@ LCMapStringW(
     IN int      cchDest
     )
 {
-    CMbcsBuffer<MAX_PATH+1> mbcsString;
+    CMbcsBuffer mbcsString;
     if (!mbcsString.FromUnicode(lpSrcStr, cchSrc))
         return 0;
 
@@ -1884,7 +1906,7 @@ LCMapStringW(
     if ((dwMapFlags & LCMAP_SORTKEY) && (cchDest == 0))
         return nRequired;
 
-    CMbcsBuffer<MAX_PATH+1> mbcsDest;
+    CMbcsBuffer mbcsDest;
     if (!mbcsDest.SetCapacity(nRequired))
         return 0;
 
@@ -1912,7 +1934,7 @@ LoadLibraryExW(
     IN DWORD dwFlags
     )
 {
-    CMbcsBuffer<MAX_PATH+1> mbcsLibFileName;
+    CMbcsBuffer mbcsLibFileName;
     if (!mbcsLibFileName.FromUnicode(lpLibFileName))
         return NULL;
 
@@ -1924,7 +1946,7 @@ LoadLibraryW(
     IN LPCWSTR lpLibFileName
     )
 {
-    CMbcsBuffer<MAX_PATH+1> mbcsLibFileName;
+    CMbcsBuffer mbcsLibFileName;
     if (!mbcsLibFileName.FromUnicode(lpLibFileName))
         return NULL;
 
@@ -1937,11 +1959,11 @@ MoveFileW(
     IN LPCWSTR lpNewFileName
     )
 {
-    CMbcsBuffer<MAX_PATH+1> mbcsExistingFileName;
+    CMbcsBuffer mbcsExistingFileName;
     if (!mbcsExistingFileName.FromUnicode(lpExistingFileName))
         return FALSE;
 
-    CMbcsBuffer<MAX_PATH+1> mbcsNewFileName;
+    CMbcsBuffer mbcsNewFileName;
     if (!mbcsNewFileName.FromUnicode(lpNewFileName))
         return FALSE;
 
@@ -1970,7 +1992,7 @@ OpenEventW(
     IN LPCWSTR lpName
     )
 {
-    CMbcsBuffer<MAX_PATH+1> mbcsName;
+    CMbcsBuffer mbcsName;
     if (!mbcsName.FromUnicode(lpName))
         return NULL;
 
@@ -1984,7 +2006,7 @@ OpenFileMappingW(
     IN LPCWSTR lpName
     )
 {
-    CMbcsBuffer<MAX_PATH+1> mbcsName;
+    CMbcsBuffer mbcsName;
     if (!mbcsName.FromUnicode(lpName))
         return NULL;
 
@@ -1998,7 +2020,7 @@ OpenMutexW(
     IN LPCWSTR lpName
     )
 {
-    CMbcsBuffer<MAX_PATH+1> mbcsName;
+    CMbcsBuffer mbcsName;
     if (!mbcsName.FromUnicode(lpName))
         return NULL;
 
@@ -2012,7 +2034,7 @@ OpenSemaphoreW(
     IN LPCWSTR lpName
     )
 {
-    CMbcsBuffer<MAX_PATH+1> mbcsName;
+    CMbcsBuffer mbcsName;
     if (!mbcsName.FromUnicode(lpName))
         return NULL;
 
@@ -2040,7 +2062,7 @@ OpenWaitableTimerW(
         return NULL;
     }
 
-    CMbcsBuffer<MAX_PATH+1> mbcsTimerName;
+    CMbcsBuffer mbcsTimerName;
     if (!mbcsTimerName.FromUnicode(lpTimerName))
         return NULL;
 
@@ -2052,7 +2074,7 @@ OutputDebugStringW(
     IN LPCWSTR lpOutputString
     )
 {
-    CMbcsBuffer<256> mbcsOutputString;
+    CMbcsBuffer mbcsOutputString;
     if (!mbcsOutputString.FromUnicode(lpOutputString))
         return;
     
@@ -2071,7 +2093,7 @@ RemoveDirectoryW(
     IN LPCWSTR lpPathName
     )
 {
-    CMbcsBuffer<MAX_PATH+1> mbcsPathName;
+    CMbcsBuffer mbcsPathName;
     if (!mbcsPathName.FromUnicode(lpPathName))
         return FALSE;
 
@@ -2107,7 +2129,7 @@ SetComputerNameW(
         }
     }
 
-    CMbcsBuffer<MAX_COMPUTERNAME_LENGTH + 1> mbcsComputerName;
+    CMbcsBuffer mbcsComputerName;
     if (!mbcsComputerName.FromUnicode(lpComputerName))
         return FALSE;
 
@@ -2119,7 +2141,7 @@ SetConsoleTitleW(
     IN LPCWSTR lpConsoleTitle
     )
 {
-    CMbcsBuffer<256> mbcsConsoleTitle;
+    CMbcsBuffer mbcsConsoleTitle;
     if (!mbcsConsoleTitle.FromUnicode(lpConsoleTitle))
         return FALSE;
 
@@ -2131,7 +2153,7 @@ SetCurrentDirectoryW(
     IN LPCWSTR lpPathName
     )
 {
-    CMbcsBuffer<MAX_PATH+1> mbcsPathName;
+    CMbcsBuffer mbcsPathName;
     if (!mbcsPathName.FromUnicode(lpPathName))
         return FALSE;
 
@@ -2146,11 +2168,11 @@ SetEnvironmentVariableW(
     IN LPCWSTR lpValue
     )
 {
-    CMbcsBuffer<128> mbcsName;
+    CMbcsBuffer mbcsName;
     if (!mbcsName.FromUnicode(lpName))
         return FALSE;
 
-    CMbcsBuffer<128> mbcsValue;
+    CMbcsBuffer mbcsValue;
     if (!mbcsValue.FromUnicode(lpValue))
         return FALSE;
 
@@ -2163,7 +2185,7 @@ SetFileAttributesW(
     IN DWORD dwFileAttributes
     )
 {
-    CMbcsBuffer<MAX_PATH+1> mbcsFileName;
+    CMbcsBuffer mbcsFileName;
     if (!mbcsFileName.FromUnicode(lpFileName))
         return FALSE;
 
@@ -2178,11 +2200,11 @@ SetVolumeLabelW(
     IN LPCWSTR lpVolumeName
     )
 {
-    CMbcsBuffer<MAX_PATH+1> mbcsRootPathName;
+    CMbcsBuffer mbcsRootPathName;
     if (!mbcsRootPathName.FromUnicode(lpRootPathName))
         return FALSE;
 
-    CMbcsBuffer<MAX_PATH+1> mbcsVolumeName;
+    CMbcsBuffer mbcsVolumeName;
     if (!mbcsVolumeName.FromUnicode(lpVolumeName))
         return FALSE;
 

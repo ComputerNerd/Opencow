@@ -63,7 +63,7 @@ OpenSaveFileNameW(
     ofnA.hwndOwner = lpofn->hwndOwner;
     ofnA.hInstance = lpofn->hInstance;
 
-    CMbcsBuffer<256> mbcsFilter;
+    CMbcsBuffer mbcsFilter;
     if (lpofn->lpstrFilter) {
         int filterLen = 0;
         int len = ::lstrlenW(lpofn->lpstrFilter);
@@ -77,7 +77,7 @@ OpenSaveFileNameW(
         ofnA.lpstrFilter = mbcsFilter;
     }
 
-    CMbcsBuffer<256> mbcsCustomFilter;
+    CMbcsBuffer mbcsCustomFilter;
     if (lpofn->lpstrCustomFilter) {
         int customFilterLen = 0;
         customFilterLen = ::lstrlenW(lpofn->lpstrCustomFilter) + 1;
@@ -92,24 +92,24 @@ OpenSaveFileNameW(
 
     ofnA.nFilterIndex = lpofn->nFilterIndex;
 
-    CMbcsBuffer<MAX_PATH+1> mbcsFile;
+    CMbcsBuffer mbcsFile;
     if (!mbcsFile.FromUnicode(lpofn->lpstrFile)) 
         return FALSE;
     ofnA.lpstrFile = mbcsFile;
     ofnA.nMaxFile = mbcsFile.BufferSize();
 
-    CMbcsBuffer<MAX_PATH+1> mbcsFileTitle;
+    CMbcsBuffer mbcsFileTitle;
     if (!mbcsFileTitle.FromUnicode(lpofn->lpstrFileTitle, -1, lpofn->nMaxFileTitle * 2)) 
         return FALSE;
     ofnA.lpstrFileTitle = mbcsFileTitle;
     ofnA.nMaxFileTitle = mbcsFileTitle.BufferSize();
 
-    CMbcsBuffer<MAX_PATH+1> mbcsInitialDir;
+    CMbcsBuffer mbcsInitialDir;
     if (!mbcsInitialDir.FromUnicode(lpofn->lpstrInitialDir)) 
         return FALSE;
     ofnA.lpstrInitialDir = mbcsInitialDir;
 
-    CMbcsBuffer<64> mbcsTitle;
+    CMbcsBuffer mbcsTitle;
     if (!mbcsTitle.FromUnicode(lpofn->lpstrTitle)) 
         return FALSE;
     ofnA.lpstrTitle = mbcsTitle;
@@ -118,7 +118,7 @@ OpenSaveFileNameW(
     // nFileOffset
     // nFileExtension
     
-    CMbcsBuffer<16> mbcsDefExt;
+    CMbcsBuffer mbcsDefExt;
     if (!mbcsDefExt.FromUnicode(lpofn->lpstrDefExt)) 
         return FALSE;
     ofnA.lpstrDefExt = mbcsDefExt;
@@ -126,7 +126,7 @@ OpenSaveFileNameW(
     ofnA.lCustData = lpofn->lCustData;
     ofnA.lpfnHook = lpofn->lpfnHook;
 
-    CMbcsBuffer<64> mbcsTemplateName;
+    CMbcsBuffer mbcsTemplateName;
     if (!mbcsTemplateName.FromUnicode(lpofn->lpTemplateName)) 
         return FALSE;
     ofnA.lpTemplateName = mbcsTemplateName;

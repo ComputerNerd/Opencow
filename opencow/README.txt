@@ -13,21 +13,27 @@ Licence
 Opencow is tri-licenced with MPL 1.1/GPL 2.0/LGPL 2.1 in the same manner as the
 Mozilla project is. See the file LICENCE.txt for the text of the licence. The
 short version of this means that Opencow may be used in both open-source and 
-closed-source commercial projects.
+closed-source commercial projects. Modifications to the code do not need to be
+made public, although it would be highly appreciated if any bug fixes or 
+alternative implementations were passed on for integration with the main 
+opencow release.
 
 
 Implementation
 --------------
-Opencow is does not currently support the complete API that MSLU supports. See
+Opencow does not currently support the complete API that MSLU supports. See
 the MSDN documentation for details of which API calls are supported by MSLU.
 See the file src/opencow.def for the list of which API calls are currently 
 supported by Opencow. The intention is to eventually support the same API set
-that MSLU supports such that opencow.dll is a complete MSLU replacement.
+that MSLU supports so that opencow.dll is a complete MSLU replacement.
 
 
 Usage
 -----
-1. Modify your application to build in Unicode mode
+1. Modify your application to build in Unicode mode 
+    VC6:  remove the definition of _MBCS, and define _UNICODE and UNICODE
+    VC7+: change the 'Character Set' to 'Use Unicode Character Set' in 
+          the 'General' project properties 
 
 2. Download the binary release of opencow.dll
 
@@ -48,10 +54,28 @@ Building
    
 2. Open opencow.dsw and build all projects.
 
+
+Debugging
+---------
+It is possible to have message boxes displayed by opencow for debugging
+purposes in both debug and release builds. The message boxes are enabled
+by setting an environment variable "OPENCOW_DEBUG" to one of the following
+values:
+
+    "0"     Disable all debug message boxes. (release build default)
+    "1"     Display a message box only on DLL load and unload.
+    "2"     Display a message box for DLL load, unload, and for every 
+            call to GetProcAddress for a function which should be 
+            implemented by opencow. (debug build default)
+
+It is possible to disable the debug message boxes in a running application 
+by choosing the 'Cancel' button when a message box is displayed.
+
+
 Notes
 -----
 
-1) There is a feature(?) in VS.NET 2003 which prevents libunicows from 
+1. There is a feature(?) in VS.NET 2003 which prevents libunicows from 
    overriding the unicode API when linking with debug information. You
    must build using VC6, or use the release version of the application 
    in order to test libunicow/opencow.
@@ -88,14 +112,14 @@ Win32 unicode functionality for Mozilla (b).
 Links
 -----
 (a) libunicows
-	http://libunicows.sourceforge.net/
-	
+    http://libunicows.sourceforge.net/
+    
 (b) Mozilla bug 239279, Need Mozilla binary that supports Windows unicode API
-	https://bugzilla.mozilla.org/show_bug.cgi?id=239279
-	
+    https://bugzilla.mozilla.org/show_bug.cgi?id=239279
+    
 (c) Microsoft Platform SDK
-	http://www.microsoft.com/msdownload/platformsdk/sdkupdate/
-	
+    http://www.microsoft.com/msdownload/platformsdk/sdkupdate/
+    
 
 Contact
 -------

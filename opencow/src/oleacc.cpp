@@ -84,7 +84,7 @@ CreateStdAccessibleProxyW(
 {
     LOAD_FUNCTION(CreateStdAccessibleProxyA, E_NOTIMPL)
 
-    CMbcsBuffer<MAX_PATH+1> mbcsClassName;
+    CMbcsBuffer mbcsClassName;
     if (!mbcsClassName.FromUnicode(pClassName))
         return FALSE;
 
@@ -105,7 +105,7 @@ GetRoleTextW(
 {
     LOAD_FUNCTION(GetRoleTextA, 0)
 
-    CMbcsBuffer<64> mbcsRole;
+    CMbcsBuffer mbcsRole;
     UINT uiLen = pGetRoleTextA(lRole, NULL, 0);
     if (!uiLen)
         return 0;
@@ -139,7 +139,7 @@ GetStateTextW(
 {
     LOAD_FUNCTION(GetStateTextA, 0)
 
-    CMbcsBuffer<64> mbcsState;
+    CMbcsBuffer mbcsState;
     UINT uiLen = pGetStateTextA(lStateBit, NULL, 0);
     if (!uiLen)
         return 0;

@@ -38,6 +38,14 @@
 
 #include "SystemVersion.h"
 
+#ifdef _DEBUG
+# define BUILD_TYPE     "Debug"
+# define DEBUG_DEFAULT  2
+#else
+# define BUILD_TYPE     "Release"
+# define DEBUG_DEFAULT  0
+#endif
+
 // ----------------------------------------------------------------------------
 // Globals
 
@@ -47,6 +55,7 @@ int         g_nPlatformServicePack  = 0;
 HMODULE     g_hOleacc               = NULL;
 HMODULE     g_hSensapi              = NULL;
 HMODULE     g_hImm32                = NULL;
+int         g_nDebug                = DEBUG_DEFAULT;
 
 // ----------------------------------------------------------------------------
 // Local Functions
@@ -71,11 +80,29 @@ DllMain(
         if (!InitializeSystemVersion())
             return FALSE;
 
-#ifdef _DEBUG
-        ::MessageBoxA(NULL, "Opencow Debug DLL has been loaded.", "opencow", MB_OK);
-#else
-        ::MessageBoxA(NULL, "Opencow Release DLL has been loaded.", "opencow", MB_OK);
-#endif
+        // determine the debug level that we are running at. 
+        // Level 0 = no notification messages (default for release build)
+        // Level 1 = load and unload
+        // Level 2 = 1 + GetProcAddress of opencow implemented functions
+        char szValue[16];
+        DWORD dwLen = ::GetEnvironmentVariableA("OPENCOW_DEBUG", 
+            szValue, sizeof(szValue));
+        if (dwLen == 1) {
+            if (*szValue >= '0' && *szValue <= '2')
+                g_nDebug = *szValue - '0';
+        }
+
+        // if we are running at any debug level then we output a message
+        // when the library is loaded
+        if (g_nDebug >= 1) {
+            int nResult = ::MessageBoxA(NULL, 
+                "Opencow " BUILD_TYPE " DLL has been loaded. "
+                "Press cancel to disable all notifications.", "opencow", 
+                MB_OKCANCEL | MB_SETFOREGROUND);
+            if (nResult == IDCANCEL)
+                g_nDebug = 0;
+        }
+
         return TRUE;
     }
 
@@ -94,6 +121,14 @@ DllMain(
         if (g_hImm32) {
             FreeLibrary(g_hImm32);
             g_hImm32 = NULL;
+        }
+
+        // if we are running at any debug level then we output a message
+        // when the library is unloaded
+        if (g_nDebug >= 1) {
+            ::MessageBoxA(NULL, 
+                "Opencow " BUILD_TYPE " DLL has been unloaded.", "opencow", 
+                MB_OK | MB_SETFOREGROUND);
         }
 
         return TRUE;

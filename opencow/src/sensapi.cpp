@@ -74,7 +74,7 @@ IsDestinationReachableW(
         }
     }
 
-    CMbcsBuffer<MAX_PATH+1> mbcsDestination;
+    CMbcsBuffer mbcsDestination;
     if (!mbcsDestination.FromUnicode(lpszDestination))
         return FALSE;
 

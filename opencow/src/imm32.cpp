@@ -110,11 +110,11 @@ ImmInstallIMEW(
 
     // --- Windows 95 only ---
 
-    CMbcsBuffer<MAX_PATH+1> mbcsIMEFileName;
+    CMbcsBuffer mbcsIMEFileName;
     if (!mbcsIMEFileName.FromUnicode(lpszIMEFileName))
         return 0;
 
-    CMbcsBuffer<MAX_PATH+1> mbcsLayoutText;
+    CMbcsBuffer mbcsLayoutText;
     if (!mbcsLayoutText.FromUnicode(lpszLayoutText))
         return 0;
 
@@ -138,7 +138,7 @@ ImmGetDescriptionW(
 
     UINT uiLen = pImmGetDescriptionA(hKL, 0, 0);
 
-    CMbcsBuffer<MAX_PATH+1> mbcsDescription;
+    CMbcsBuffer mbcsDescription;
     mbcsDescription.SetCapacity((int) uiLen + 1);
 
     uiLen = pImmGetDescriptionA(hKL, mbcsDescription, (UINT) mbcsDescription.BufferSize());
@@ -172,7 +172,7 @@ ImmGetIMEFileNameW(
 
     UINT uiLen = pImmGetIMEFileNameA(hKL, 0, 0);
 
-    CMbcsBuffer<MAX_PATH+1> mbcsFileName;
+    CMbcsBuffer mbcsFileName;
     mbcsFileName.SetCapacity((int) uiLen + 1);
 
     uiLen = pImmGetIMEFileNameA(hKL, mbcsFileName, (UINT) mbcsFileName.BufferSize());

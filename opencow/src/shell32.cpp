@@ -69,7 +69,7 @@ SHBrowseForFolderW(
     biA.iImage          = lpbi->iImage;
     biA.pszDisplayName  = mbcsDisplayName;
 
-    CMbcsBuffer<128> mbcsTitle;
+    CMbcsBuffer mbcsTitle;
     if (!mbcsTitle.FromUnicode(lpbi->lpszTitle))
         return NULL;
     biA.lpszTitle = mbcsTitle;
@@ -113,11 +113,11 @@ ShellAboutW(
     HICON hIcon
     )
 {
-    CMbcsBuffer<128> mbcsApp;
+    CMbcsBuffer mbcsApp;
     if (!mbcsApp.FromUnicode(szApp))
         return 0;
 
-    CMbcsBuffer<128> mbcsOtherStuff;
+    CMbcsBuffer mbcsOtherStuff;
     if (!mbcsOtherStuff.FromUnicode(szOtherStuff))
         return 0;
 
@@ -136,19 +136,19 @@ ShellExecuteW(
     INT nShowCmd
     )
 {
-    CMbcsBuffer<128> mbcsOperation;
+    CMbcsBuffer mbcsOperation;
     if (!mbcsOperation.FromUnicode(lpOperation))
         return 0;
 
-    CMbcsBuffer<MAX_PATH+1> mbcsFile;
+    CMbcsBuffer mbcsFile;
     if (!mbcsFile.FromUnicode(lpFile))
         return 0;
 
-    CMbcsBuffer<MAX_PATH+1> mbcsParameters;
+    CMbcsBuffer mbcsParameters;
     if (!mbcsParameters.FromUnicode(lpParameters))
         return 0;
 
-    CMbcsBuffer<MAX_PATH+1> mbcsDirectory;
+    CMbcsBuffer mbcsDirectory;
     if (!mbcsDirectory.FromUnicode(lpDirectory))
         return 0;
 

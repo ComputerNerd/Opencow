@@ -108,6 +108,10 @@ SOURCE=.\kernel32.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\MbcsBuffer.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\msvcrt.cpp
 # End Source File
 # Begin Source File
@@ -168,11 +172,15 @@ SOURCE=.\opencow.rc
 # PROP Default_Filter ""
 # Begin Source File
 
-SOURCE=.\opencow.txt
+SOURCE=..\LICENCE.txt
 # End Source File
 # Begin Source File
 
-SOURCE=.\symbols.txt
+SOURCE=..\README.txt
+# End Source File
+# Begin Source File
+
+SOURCE=..\release.bat
 # End Source File
 # End Group
 # End Target

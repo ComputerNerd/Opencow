@@ -62,7 +62,7 @@ GetUserNameW(
     IN OUT LPDWORD nSize
     )
 {
-    CMbcsBuffer<UNLEN+1> mbcsBuffer;
+    CMbcsBuffer mbcsBuffer;
     DWORD dwBufSize = (DWORD) mbcsBuffer.BufferSize();
     DWORD dwResult = ::GetUserNameA(mbcsBuffer, &dwBufSize);
     if (!dwResult)
@@ -90,7 +90,7 @@ RegConnectRegistryW(
     OUT PHKEY phkResult
     )
 {
-    CMbcsBuffer<MAX_PATH+1> mbcsMachineName;
+    CMbcsBuffer mbcsMachineName;
     if (!mbcsMachineName.FromUnicode(lpMachineName))
         return ERROR_NOT_ENOUGH_MEMORY;
 
@@ -110,11 +110,11 @@ RegCreateKeyExW(
     OUT LPDWORD lpdwDisposition
     )
 {
-    CMbcsBuffer<MAX_PATH+1> mbcsSubKey;
+    CMbcsBuffer mbcsSubKey;
     if (!mbcsSubKey.FromUnicode(lpSubKey))
         return ERROR_NOT_ENOUGH_MEMORY;
 
-    CMbcsBuffer<MAX_PATH+1> mbcsClass;
+    CMbcsBuffer mbcsClass;
     if (!mbcsClass.FromUnicode(lpClass))
         return ERROR_NOT_ENOUGH_MEMORY;
 
@@ -129,7 +129,7 @@ RegCreateKeyW(
     OUT PHKEY phkResult
     )
 {
-    CMbcsBuffer<MAX_PATH+1> mbcsSubKey;
+    CMbcsBuffer mbcsSubKey;
     if (!mbcsSubKey.FromUnicode(lpSubKey))
         return ERROR_NOT_ENOUGH_MEMORY;
 
@@ -142,7 +142,7 @@ RegDeleteKeyW(
     IN LPCWSTR lpSubKey
     )
 {
-    CMbcsBuffer<MAX_PATH+1> mbcsSubKey;
+    CMbcsBuffer mbcsSubKey;
     if (!mbcsSubKey.FromUnicode(lpSubKey))
         return ERROR_NOT_ENOUGH_MEMORY;
 
@@ -155,7 +155,7 @@ RegDeleteValueW(
     IN LPCWSTR lpValueName
     )
 {
-    CMbcsBuffer<MAX_PATH+1> mbcsValueName;
+    CMbcsBuffer mbcsValueName;
     if (!mbcsValueName.FromUnicode(lpValueName))
         return ERROR_NOT_ENOUGH_MEMORY;
 
@@ -174,11 +174,11 @@ RegEnumKeyExW(
     OUT PFILETIME lpftLastWriteTime
     )
 {
-    CMbcsBuffer<MAX_PATH+1> mbcsName;
+    CMbcsBuffer mbcsName;
     if (!mbcsName.SetCapacity(*lpcbName))
         return ERROR_NOT_ENOUGH_MEMORY;
 
-    CMbcsBuffer<MAX_PATH+1> mbcsClass;
+    CMbcsBuffer mbcsClass;
     if (lpClass && lpcbClass) {
         if (!mbcsClass.SetCapacity(*lpcbClass))
             return ERROR_NOT_ENOUGH_MEMORY;
@@ -213,7 +213,7 @@ RegEnumKeyW(
     IN DWORD cbName
     )
 {
-    CMbcsBuffer<MAX_PATH+1> mbcsName;
+    CMbcsBuffer mbcsName;
     if (!mbcsName.SetCapacity(cbName))
         return ERROR_NOT_ENOUGH_MEMORY;
 
@@ -237,11 +237,11 @@ RegEnumValueW(
     IN OUT LPDWORD lpcbData
     )
 {
-    CMbcsBuffer<MAX_PATH+1> mbcsValueName;
+    CMbcsBuffer mbcsValueName;
     if (!mbcsValueName.SetCapacity(*lpcbValueName))
         return ERROR_NOT_ENOUGH_MEMORY;
 
-    CMbcsBuffer<MAX_PATH+1> mbcsData;
+    CMbcsBuffer mbcsData;
     if (lpData) {
         if (!mbcsData.SetCapacity(*lpcbData))
             return ERROR_NOT_ENOUGH_MEMORY;
@@ -306,11 +306,11 @@ RegLoadKeyW(
     IN LPCWSTR  lpFile
     )
 {
-    CMbcsBuffer<MAX_PATH+1> mbcsSubKey;
+    CMbcsBuffer mbcsSubKey;
     if (!mbcsSubKey.FromUnicode(lpSubKey))
         return ERROR_NOT_ENOUGH_MEMORY;
 
-    CMbcsBuffer<MAX_PATH+1> mbcsFile;
+    CMbcsBuffer mbcsFile;
     if (!mbcsFile.FromUnicode(lpFile))
         return ERROR_NOT_ENOUGH_MEMORY;
 
@@ -332,7 +332,7 @@ RegOpenKeyExW(
     OUT PHKEY phkResult
     )
 {
-    CMbcsBuffer<MAX_PATH+1> mbcsSubKey;
+    CMbcsBuffer mbcsSubKey;
     if (!mbcsSubKey.FromUnicode(lpSubKey))
         return ERROR_NOT_ENOUGH_MEMORY;
 
@@ -346,7 +346,7 @@ RegOpenKeyW(
     OUT PHKEY phkResult
     )
 {
-    CMbcsBuffer<MAX_PATH+1> mbcsSubKey;
+    CMbcsBuffer mbcsSubKey;
     if (!mbcsSubKey.FromUnicode(lpSubKey))
         return ERROR_NOT_ENOUGH_MEMORY;
 
@@ -369,7 +369,7 @@ RegQueryInfoKeyW(
     OUT PFILETIME lpftLastWriteTime
     )
 {
-    CMbcsBuffer<MAX_PATH+1> mbcsClass;
+    CMbcsBuffer mbcsClass;
     if (lpClass && lpcbClass) {
         if (!mbcsClass.SetCapacity(*lpcbClass))
             return ERROR_NOT_ENOUGH_MEMORY;
@@ -409,11 +409,11 @@ RegQueryValueExW(
     IN OUT LPDWORD lpcbData
     )
 {
-    CMbcsBuffer<MAX_PATH+1> mbcsValueName;
+    CMbcsBuffer mbcsValueName;
     if (!mbcsValueName.FromUnicode(lpValueName))
         return ERROR_NOT_ENOUGH_MEMORY;
 
-    CMbcsBuffer<MAX_PATH+1> mbcsData;
+    CMbcsBuffer mbcsData;
     if (lpData) {
         if (!mbcsData.SetCapacity(*lpcbData))
             return ERROR_NOT_ENOUGH_MEMORY;
@@ -475,11 +475,11 @@ RegQueryValueW(
     IN OUT PLONG   lpcbValue
     )
 {
-    CMbcsBuffer<MAX_PATH+1> mbcsSubKey;
+    CMbcsBuffer mbcsSubKey;
     if (!mbcsSubKey.FromUnicode(lpSubKey))
         return ERROR_NOT_ENOUGH_MEMORY;
 
-    CMbcsBuffer<MAX_PATH+1> mbcsValue;
+    CMbcsBuffer mbcsValue;
     if (lpValue) {
         if (!mbcsValue.SetCapacity(*lpcbValue))
             return ERROR_NOT_ENOUGH_MEMORY;
@@ -512,15 +512,15 @@ RegReplaceKeyW(
     IN LPCWSTR  lpOldFile
     )
 {
-    CMbcsBuffer<MAX_PATH+1> mbcsSubKey;
+    CMbcsBuffer mbcsSubKey;
     if (!mbcsSubKey.FromUnicode(lpSubKey))
         return ERROR_NOT_ENOUGH_MEMORY;
 
-    CMbcsBuffer<MAX_PATH+1> mbcsNewFile;
+    CMbcsBuffer mbcsNewFile;
     if (!mbcsNewFile.FromUnicode(lpNewFile))
         return ERROR_NOT_ENOUGH_MEMORY;
 
-    CMbcsBuffer<MAX_PATH+1> mbcsOldFile;
+    CMbcsBuffer mbcsOldFile;
     if (!mbcsOldFile.FromUnicode(lpOldFile))
         return ERROR_NOT_ENOUGH_MEMORY;
 
@@ -534,7 +534,7 @@ RegSaveKeyW(
     IN LPSECURITY_ATTRIBUTES lpSecurityAttributes
     )
 {
-    CMbcsBuffer<MAX_PATH+1> mbcsFile;
+    CMbcsBuffer mbcsFile;
     if (!mbcsFile.FromUnicode(lpFile))
         return ERROR_NOT_ENOUGH_MEMORY;
 
@@ -551,11 +551,11 @@ RegSetValueExW(
     IN DWORD cbData
     )
 {
-    CMbcsBuffer<MAX_PATH+1> mbcsValueName;
+    CMbcsBuffer mbcsValueName;
     if (!mbcsValueName.FromUnicode(lpValueName))
         return ERROR_NOT_ENOUGH_MEMORY;
 
-    CMbcsBuffer<MAX_PATH+1> mbcsData;
+    CMbcsBuffer mbcsData;
     CONST BYTE* pData = lpData;
     if (dwType == REG_EXPAND_SZ || dwType == REG_SZ || dwType == REG_MULTI_SZ) {
         if (!mbcsData.FromUnicode((LPCWSTR)lpData, cbData/sizeof(wchar_t)))
@@ -576,11 +576,11 @@ RegSetValueW(
     IN DWORD cbData
     )
 {
-    CMbcsBuffer<MAX_PATH+1> mbcsSubKey;
+    CMbcsBuffer mbcsSubKey;
     if (!mbcsSubKey.FromUnicode(lpSubKey))
         return ERROR_NOT_ENOUGH_MEMORY;
 
-    CMbcsBuffer<MAX_PATH+1> mbcsData;
+    CMbcsBuffer mbcsData;
     if (!mbcsData.FromUnicode(lpData))
         return ERROR_NOT_ENOUGH_MEMORY;
     cbData = ::lstrlenA(mbcsData);
@@ -594,7 +594,7 @@ RegUnLoadKeyW(
     IN LPCWSTR lpSubKey
     )
 {
-    CMbcsBuffer<MAX_PATH+1> mbcsSubKey;
+    CMbcsBuffer mbcsSubKey;
     if (!mbcsSubKey.FromUnicode(lpSubKey))
         return ERROR_NOT_ENOUGH_MEMORY;
 

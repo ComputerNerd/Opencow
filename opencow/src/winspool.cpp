@@ -71,7 +71,7 @@ DocumentPropertiesW(
     IN DWORD     fMode 
     )
 {
-    CMbcsBuffer<CCHDEVICENAME> mbcsDeviceName;
+    CMbcsBuffer mbcsDeviceName;
     if (!mbcsDeviceName.FromUnicode(pDeviceName))
         return -1;
 

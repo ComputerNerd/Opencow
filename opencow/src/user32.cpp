@@ -190,7 +190,7 @@ CreateWindowExW(
     )
 {
     // class name is only a string if the HIWORD is not 0
-    CMbcsBuffer<128> mbcsClassName;
+    CMbcsBuffer mbcsClassName;
     LPCSTR pmbcsClassName = (LPCSTR) lpClassName;
     if (HIWORD(lpClassName) != 0) {
         if (!mbcsClassName.FromUnicode(lpClassName))
@@ -198,7 +198,7 @@ CreateWindowExW(
         pmbcsClassName = mbcsClassName;
     }
 
-    CMbcsBuffer<128> mbcsWindowName;
+    CMbcsBuffer mbcsWindowName;
     if (!mbcsWindowName.FromUnicode(lpWindowName))
         return NULL;
 
@@ -270,7 +270,7 @@ GetClassNameW(
     IN int nMaxCount
     )
 {
-    CMbcsBuffer<128> mbcsClassName;
+    CMbcsBuffer mbcsClassName;
     if (!mbcsClassName.SetCapacity(nMaxCount*2))
         return 0;
 
@@ -298,7 +298,7 @@ GetClipboardFormatNameW(
     IN int cchMaxCount
     )
 {
-    CMbcsBuffer<256> mbcsFormatName;
+    CMbcsBuffer mbcsFormatName;
     if (!mbcsFormatName.SetCapacity(cchMaxCount))
         return 0;
 
@@ -376,11 +376,11 @@ MessageBoxExW(
     IN WORD wLanguageId
     )
 {
-    CMbcsBuffer<256> mbcsText;
+    CMbcsBuffer mbcsText;
     if (!mbcsText.FromUnicode(lpText))
         return 0;
 
-    CMbcsBuffer<128> mbcsCaption;
+    CMbcsBuffer mbcsCaption;
     if (!mbcsCaption.FromUnicode(lpCaption))
         return 0;
 
@@ -397,11 +397,11 @@ MessageBoxW(
     IN UINT uType
     )
 {
-    CMbcsBuffer<256> mbcsText;
+    CMbcsBuffer mbcsText;
     if (!mbcsText.FromUnicode(lpText))
         return 0;
 
-    CMbcsBuffer<128> mbcsCaption;
+    CMbcsBuffer mbcsCaption;
     if (!mbcsCaption.FromUnicode(lpCaption))
         return 0;
 
@@ -446,7 +446,7 @@ RegisterClassW(
     wndClassA.hCursor       = lpWndClass->hCursor;
     wndClassA.hbrBackground = lpWndClass->hbrBackground;
 
-    CMbcsBuffer<128> mbcsMenuName;
+    CMbcsBuffer mbcsMenuName;
     if (lpWndClass->lpszMenuName) {
         if (!mbcsMenuName.FromUnicode(lpWndClass->lpszMenuName))
             return 0;
@@ -454,7 +454,7 @@ RegisterClassW(
     }
 
     // class name is only a string if the HIWORD is not 0
-    CMbcsBuffer<128> mbcsClassName;
+    CMbcsBuffer mbcsClassName;
     wndClassA.lpszClassName = (LPCSTR) lpWndClass->lpszClassName;
     if (HIWORD(lpWndClass->lpszClassName) != 0) {
         if (!mbcsClassName.FromUnicode(lpWndClass->lpszClassName))
@@ -470,7 +470,7 @@ RegisterClipboardFormatW(
     IN LPCWSTR lpszFormat
     )
 {
-    CMbcsBuffer<128> mbcsFormat;
+    CMbcsBuffer mbcsFormat;
     if (!mbcsFormat.FromUnicode(lpszFormat))
         return 0;
 
@@ -504,7 +504,7 @@ SendMessageTimeoutW(
         Msg == WM_SETTINGCHANGE );
 
     if (Msg == WM_SETTEXT) {
-        CMbcsBuffer<MAX_PATH+1> mbcsString;
+        CMbcsBuffer mbcsString;
         if (!mbcsString.FromUnicode((LPWSTR)lParam))
             return ::SendMessageTimeoutA(hWnd, WM_SETTEXT, 0, 0, 
                 fuFlags, uTimeout, lpdwResult); // error value depends on hWnd
@@ -514,7 +514,7 @@ SendMessageTimeoutW(
     }
 
     if (Msg == WM_SETTINGCHANGE) {
-        CMbcsBuffer<MAX_PATH+1> mbcsString;
+        CMbcsBuffer mbcsString;
         if (!mbcsString.FromUnicode((LPWSTR)lParam))
             mbcsString.SetNull();   // don't set the string
         return ::SendMessageTimeoutA(hWnd, WM_SETTINGCHANGE, wParam, (LPARAM) mbcsString.get(), 
@@ -542,7 +542,7 @@ SendMessageW(
         Msg == WM_SETTINGCHANGE );
 
     if (Msg == WM_SETTEXT) {
-        CMbcsBuffer<MAX_PATH+1> mbcsString;
+        CMbcsBuffer mbcsString;
         if (!mbcsString.FromUnicode((LPWSTR)lParam))
             return ::SendMessageA(hWnd, WM_SETTEXT, 0, 0); // error value depends on hWnd
 
@@ -550,7 +550,7 @@ SendMessageW(
     }
 
     if (Msg == WM_SETTINGCHANGE) {
-        CMbcsBuffer<MAX_PATH+1> mbcsString;
+        CMbcsBuffer mbcsString;
         if (!mbcsString.FromUnicode((LPWSTR)lParam))
             mbcsString.SetNull();   // don't set the string
         return ::SendMessageA(hWnd, WM_SETTINGCHANGE, wParam, (LPARAM) mbcsString.get());
@@ -581,7 +581,7 @@ UnregisterClassW(
     )
 {
     // class name is only a string if the HIWORD is not 0
-    CMbcsBuffer<128> mbcsClassName;
+    CMbcsBuffer mbcsClassName;
     LPCSTR pmbcsClassName = (LPCSTR) lpClassName;
     if (HIWORD(lpClassName) != 0) {
         if (!mbcsClassName.FromUnicode(lpClassName))
