@@ -16,6 +16,15 @@ short version of this means that Opencow may be used in both open-source and
 closed-source commercial projects.
 
 
+Implementation
+--------------
+Opencow is does not currently support the complete API that MSLU supports. See
+the MSDN documentation for details of which API calls are supported by MSLU.
+See the file src/opencow.def for the list of which API calls are currently 
+supported by Opencow. The intention is to eventually support the same API set
+that MSLU supports such that opencow.dll is a complete MSLU replacement.
+
+
 Usage
 -----
 1. Modify your application to build in Unicode mode
@@ -79,8 +88,14 @@ Links
 -----
 (a) libunicows
 	http://libunicows.sourceforge.net/
-(b) Mozilla bug 239279
+	
+(b) Mozilla bug 239279, Need Mozilla binary that supports Windows unicode API
 	https://bugzilla.mozilla.org/show_bug.cgi?id=239279
+	
 (c) Microsoft Platform SDK
 	http://www.microsoft.com/msdownload/platformsdk/sdkupdate/
 	
+
+Contact
+-------
+You may contact the author, Brodie Thiesfield, at brofield@jellycan.com
