@@ -48,9 +48,10 @@ Building
    
 2. Open opencow.dsw and build all projects.
 
-Notes:
+Notes
+-----
 
-a) There is a feature(?) in VS.NET 2003 which prevents libunicows from 
+1) There is a feature(?) in VS.NET 2003 which prevents libunicows from 
    overriding the unicode API when linking with debug information. You
    must build using VC6, or use the release version of the application 
    in order to test libunicow/opencow.
