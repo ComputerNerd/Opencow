@@ -1,0 +1,36 @@
+Summary
+
+An open-source friendly replacement library for the Microsoft Layer for Unicode.
+This library allows a Unicode Windows application to run on all versions of 
+Windows including 95, 98 and ME.
+
+
+Technical Description
+
+The Microsoft Layer for Unicode (MSLU or Unicow) is a DLL (unicows.dll) and 
+import library (unicows.lib) distributed by Microsoft which allows a single 
+32-bit unicode application to run on versions of Microsoft Windows which do 
+not natively support unicode applications (95, 98 and ME). The Microsft 
+library is unsurprisingly distributed under a licence which is not compatible 
+with open source software (1).
+
+The support for Unicode on Windows 95/98/ME is provided by implementing the 
+Unicode Win32 API in the DLL. This DLL is not used by Windows platforms 
+which natively support unicode, but only by Windows 95/98/ME. Internally 
+the unicode Win32 API translates strings between the unicode encoding used 
+for input and output parameters and the multi-byte codepage strings supported 
+by the OS, calling the ANSI Win32 API with the translated strings.
+
+This project, the Open Layer for Unicode (opencow) is designed to be a 
+drop-in replacement for the MSLU, providing the exact same functionality with 
+an open source compatible licence. The final deliverable of this project is a 
+single compiled DLL (opencow.dll) which implements the same external interface 
+as the Microsoft DLL. This DLL is used by software projects along with 
+libunicows (2).
+
+This project came about due to the Mozilla project's need to have an 
+open-source compatible library for MSLU and is expected to be used to provide 
+Win32 unicode functionality for Mozilla (1).
+
+(1) https://bugzilla.mozilla.org/show_bug.cgi?id=239279
+(2) http://libunicows.sourceforge.net/
