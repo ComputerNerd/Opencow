@@ -12,32 +12,52 @@
 <h1>Opencow: Open Layer for Unicode</h1>
 
 <h2>Introduction</h2>
-<p>Opencow is an open-source friendly replacement library for the Microsoft Layer
+<p>
+Opencow is an open-source friendly replacement library for the Microsoft Layer
 for Unicode. This library allows a Unicode Windows application to run on all
-versions of Windows including 95, 98 and ME.</p>
+versions of Windows including 95, 98 and ME.
+</p>
 
+
+<h2>Download</h2>
+<p>
+The latest version of opencow is version 0.6. It can be downloaded from the
+<a href="https://sourceforge.net/project/showfiles.php?group_id=125570">sourceforge</a>
+release site.
 
 <h2>Licence</h2>
-<p>Opencow is tri-licenced with MPL 1.1/GPL 2.0/LGPL 2.1 in the same manner as the
+<p>
+Opencow is tri-licenced with MPL 1.1/GPL 2.0/LGPL 2.1 in the same manner as the
 Mozilla project is. See the file
 <a href="http://cvs.sourceforge.net/viewcvs.py/opencow/opencow/LICENCE.txt?rev=HEAD">LICENCE.txt</a>
 for the text of the licence. The
 short version of this means that Opencow may be used in both open-source and
-closed-source commercial projects.</p>
+closed-source commercial projects. Modifications to the code do not need to be
+made public, although it would be highly appreciated if any bug fixes or
+alternative implementations were passed on for integration with the main
+opencow release.
+</p>
 
 
 <h2>Implementation</h2>
-<p>Opencow is does not currently support the complete API that MSLU supports. See
+<p>
+Opencow does not currently support the complete API that MSLU supports. See
 the MSDN documentation for details of which API calls are supported by MSLU.
 See the file src/opencow.def for the list of which API calls are currently
 supported by Opencow. The intention is to eventually support the same API set
-that MSLU supports such that opencow.dll is a complete MSLU replacement.</p>
+that MSLU supports so that opencow.dll is a complete MSLU replacement.
+</p>
 
 
 <h2>Usage</h2>
 
 <ol>
 <li>Modify your application to build in Unicode mode
+Modify your application to build in Unicode mode
+<br />VC6:  remove the definition of _MBCS, and define _UNICODE and UNICODE
+<br />VC7+: change the 'Character Set' to 'Use Unicode Character Set' in
+          the 'General' project properties
+
 
 <li>Download the binary release of opencow.dll
 
@@ -50,6 +70,7 @@ that MSLU supports such that opencow.dll is a complete MSLU replacement.</p>
    application.
 </ol>
 
+
 <h2>Building</h2>
 
 <ol>
@@ -60,7 +81,28 @@ that MSLU supports such that opencow.dll is a complete MSLU replacement.</p>
 <li>Open opencow.dsw and build all projects.
 </ol>
 
-<p><b>Notes:</b>
+
+<h2>Debugging</h2>
+<p>
+It is possible to have message boxes displayed by opencow for debugging
+purposes in both debug and release builds. The message boxes are enabled
+by setting an environment variable "OPENCOW_DEBUG" to one of the following
+values:
+<blockquote>
+    "0"     Disable all debug message boxes. (release build default)
+<br>
+    "1"     Display a message box only on DLL load and unload.
+<br>
+    "2"     Display a message box for DLL load, unload, and for every
+            call to GetProcAddress for a function which should be
+            implemented by opencow. (debug build default)
+</blockquote>
+<p>
+It is possible to disable the debug message boxes in a running application
+by choosing the 'Cancel' button when a message box is displayed.
+
+
+<h2>Notes:</h2>
 
 <ol>
 <li>There is a feature(?) in VS.NET 2003 which prevents libunicows from
